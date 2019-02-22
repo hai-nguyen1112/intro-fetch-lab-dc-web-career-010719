@@ -21,10 +21,11 @@ inputField.addEventListener('keydown', function(e) {
     }
   })
 
-function getMathFact(e){
+function getMathFact(){
   fetch(`http://numbersapi.com/${inputField.value}/math`)
   .then(res => res.text())
-  .then(text => postMathFact(text))
+  .then(text => postMathFact(text));
+  inputField.value = ""
 }
 
 function postMathFact(text) {
@@ -46,4 +47,19 @@ function getYearFact(){
 
 function postYearFact(text){
   document.getElementById('year-history').innerText = text
+}
+
+let allNumbersButton = document.getElementById('all-numbers-button')
+allNumbersButton.addEventListener('click', getAllNumbers)
+
+function getAllNumbers() {
+  for (let i=0; i<100; i++) {
+    fetch('http://numbersapi.com/random/trivia')
+    .then(res => res.text())
+    .then(text => postAllNumbers(text))
+  }
+}
+
+function postAllNumbers(text) {
+  document.getElementById('all-the-numbers').innerHTML += `<p>${text}</p>`
 }
